@@ -18,12 +18,20 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.tieto.alfresco.redundancystopper.model.RedundancyStopperModel;
 
 public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	
+	@Autowired
+	@Qualifier("nodeService")
 	private NodeService nodeService;
+	
+	@Autowired
+	@Qualifier("dictionaryService")
 	private DictionaryService dictionaryService;
 	
 	@Override
@@ -75,14 +83,6 @@ public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 
 	@Override
 	protected void addParameterDefinitions(List<ParameterDefinition> paramList) {
-
-	}
-
-	public void setNodeService(NodeService nodeService) {
-		this.nodeService = nodeService;
-	}
-
-	public void setDictionaryService(DictionaryService dictionaryService) {
-		this.dictionaryService = dictionaryService;
+		//Not needed in this action
 	}
 }
