@@ -22,6 +22,13 @@
 
 	<bean id="redundancyActionExecuter" class="com.tieto.alfresco.redundancystopper.RedundancyActionExecuter" parent="action-executer">
 		<property name="nodeService" ref="NodeService" />
+		<property name="dictionaryService" ref="DictionaryService" />
+	</bean>
+	
+	<bean id="redundancyIdentificatorPolicy" class="com.tieto.alfresco.redundancystopper.RedundancyIdentificatorPolicy" init-method="init">
+		<property name="policyComponent" ref="policyComponent" />
+		<property name="nodeService" ref="NodeService" />
+		<property name="dictionaryService" ref="DictionaryService" />
 	</bean>
     
 </beans>
