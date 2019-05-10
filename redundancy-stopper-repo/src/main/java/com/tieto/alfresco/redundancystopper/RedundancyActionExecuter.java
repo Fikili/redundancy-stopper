@@ -15,6 +15,9 @@ import org.alfresco.service.cmr.action.ParameterDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.StoreRef;
+import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,10 @@ public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 	@Autowired
 	@Qualifier("dictionaryService")
 	private DictionaryService dictionaryService;
+	
+	@Autowired
+	@Qualifier("searchService")
+	private SearchService searchService;
 	
 	@Override
 	protected void executeImpl(Action action, final NodeRef actionedUponNodeRef) {
@@ -65,14 +72,29 @@ public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 
 			private List<NodeRef> findSameFiles(NodeRef actionedUponNodeRef) {
 				List <NodeRef> listOfSameFiles = new ArrayList<>();
-				nodeService.getProperty(actionedUponNodeRef, RedundancyStopperModel.PROP_FINGERPRINT);
-				// TODO: Add search query CMIS vs DB
+				String fingerprint = (String) nodeService.getProperty(actionedUponNodeRef, RedundancyStopperModel.PROP_FINGERPRINT);
+				String cmisQuery = "select * from rstop:identificator where rstop:fingerPrint=\'" + fingerprint +"\'";
+				ResultSet rs = null;
+				
+				// Find all files with same value in PROP_FINGERPRINT
+				try {
+					rs = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_CMIS_ALFRESCO, cmisQuery);
+					if (null != rs && rs.length() > 0) {
+						listOfSameFiles = rs.getNodeRefs();
+					}
+				} finally {
+					if (rs != null) {
+						rs.close();
+					}
+				}
+				LOGGER.debug("Used query : {} | with results {}", cmisQuery, listOfSameFiles.size() );
 				return listOfSameFiles;
 				
 			}
 
 			private void addIdentificatorAspect(final NodeRef actionedUponNodeRef) {
 				final Map<QName, Serializable> aspectProperties = new HashMap<QName, Serializable>(1);
+				// TODO: Rewrite to contentService
 				String contentSize = String.valueOf(nodeService.getProperty(actionedUponNodeRef, ContentModel.PROP_CONTENT)).split("\\|")[2];
 				LOGGER.debug("With contentSize = {}", contentSize);
 				aspectProperties.put(RedundancyStopperModel.PROP_FINGERPRINT, contentSize);

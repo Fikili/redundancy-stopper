@@ -25,12 +25,5 @@
 
 	<context:component-scan base-package="com.tieto.alfresco.redundancystopper"/>
 	<bean id="redundancyActionExecuter" class="com.tieto.alfresco.redundancystopper.RedundancyActionExecuter" parent="action-executer" />
-
-	
-	<bean id="redundancyIdentificatorPolicy" class="com.tieto.alfresco.redundancystopper.RedundancyIdentificatorPolicy" init-method="init">
-		<property name="policyComponent" ref="policyComponent" />
-		<property name="nodeService" ref="NodeService" />
-		<property name="dictionaryService" ref="DictionaryService" />
-	</bean>
-    
+	    
 </beans>
