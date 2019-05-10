@@ -442,19 +442,5 @@
 		</forms>
 	</config>
 	
-	<config evaluator="aspect" condition="rstop:duplicates">
-		<forms>
-			<form>
-				<field-visibility>
-					<show id="rstop:fingerPrint" for-mode="view" />
-				</field-visibility>
-				<appearance>
-					<set id="rstop-info" label-id="form.field.label.rstop" appearance="panel" template="/org/alfresco/components/form/2-column-set.ftl" />
-					<field id="rstop:fingerPrint" label-id="form.field.label.rstop.fingerPrint" set="rstop-info" />
-				</appearance>
-			</form>
-		</forms>
-	</config>	
-
 
 </alfresco-config>
