@@ -65,9 +65,13 @@ public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 				
 			}
 
-			private void createAssociations(NodeRef originalNodeRef, List<NodeRef> listOfSameFiles) {
-				// TODO Auto-generated method stub
-				
+			private void createAssociations(NodeRef sourceNodeRef, List<NodeRef> listOfSameFiles) {
+				LOGGER.debug("Let's create associations");
+				for (NodeRef nodeRef : listOfSameFiles) {
+					if (! nodeRef.equals(sourceNodeRef)) {
+						nodeService.createAssociation(sourceNodeRef, nodeRef, RedundancyStopperModel.ASSOC_DUPLICATES);
+					}
+				}
 			}
 
 			private List<NodeRef> findSameFiles(NodeRef actionedUponNodeRef) {
