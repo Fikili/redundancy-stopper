@@ -40,6 +40,23 @@
 				</property>
 			</properties>
 		</aspect>
+		
+		<aspect name="rstop:duplicates">
+			<title>Duplicate files</title>
+ 			<associations>
+ 				<association name="rstop:duplicateAssocs">
+                    <source>
+                        <mandatory>true</mandatory>
+                        <many>false</many>
+                    </source>
+                    <target>
+                        <class>cm:content</class>
+                        <mandatory enforced="false">false</mandatory>
+                        <many>false</many>
+                    </target>
+                </association>
+ 			</associations>
+		</aspect>
 	</aspects>
 
 </model>
