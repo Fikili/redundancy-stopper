@@ -22,5 +22,14 @@
          </list>
       </property>
    </bean>
+   
+   	<!-- Evaluator for having rstop:duplicates aspect  -->
+	<bean id="rstop.evaluator.isDuplicate" class="org.alfresco.web.evaluator.HasAspectEvaluator">
+		<property name="aspects">
+			<list>
+				<value>rstop:duplicates</value>
+			</list>
+		</property>
+	</bean>
 
 </beans>

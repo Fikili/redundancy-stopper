@@ -19,7 +19,6 @@
     <config evaluator="string-compare" condition="DocumentLibrary">
         <aspects>
             <visible>
-                <aspect name="acme:securityClassified"/>
             </visible>
             <addable> <!-- defaults to visible config -->
             </addable>
@@ -27,11 +26,14 @@
             </removeable>
         </aspects>
         <types>
-            <!-- Define the ACME base doc type as decedent from cm:content -->
-            <type name="cm:content">
-                <subtype name="acme:document"/>
-            </type>
         </types>
+        
+        <!-- Custom Indicators -->
+		<indicators>
+			<indicator id="rstop-duplicate" index="10">
+				<evaluator>rstop.evaluator.isDuplicate</evaluator>
+			</indicator>
+		</indicators>
     </config>
 
     <!--================================================================================================================
@@ -415,6 +417,44 @@
             </form>
         </forms>
     </config>
+
+
+	<config evaluator="aspect" condition="rstop:identificator">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="rstop:fingerPrint" for-mode="view" />
+					<show id="rstop:duplicateAssocs" for-mode="view" />
+				</field-visibility>
+				<appearance>
+					<set id="rstop-info" label-id="form.set.label.rstop" appearance="panel" />
+					<field id="rstop:fingerPrint" label-id="form.field.label.rstop.fingerPrint" set="rstop-info" />
+					
+					<field id="rstop:duplicateAssocs" label-id="form.field.label.rstop.associations" set="rstop-info">
+                    	<control template="/org/alfresco/components/form/controls/association.ftl">
+                    		<control-param name="displayMode">items</control-param>
+                     		<control-param name="showTargetLink">true</control-param>
+                     		<control-param name="compactMode">true</control-param>
+                  		</control>
+                  	</field>
+				</appearance>
+			</form>
+		</forms>
+	</config>
+	
+	<config evaluator="aspect" condition="rstop:duplicates">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="rstop:fingerPrint" for-mode="view" />
+				</field-visibility>
+				<appearance>
+					<set id="rstop-info" label-id="form.field.label.rstop" appearance="panel" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<field id="rstop:fingerPrint" label-id="form.field.label.rstop.fingerPrint" set="rstop-info" />
+				</appearance>
+			</form>
+		</forms>
+	</config>	
 
 
 </alfresco-config>
