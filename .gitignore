@@ -1,0 +1,10 @@
+/.settings/
+/alf_data_dev/
+/logs/
+/.metadata/
+*.log*
+/target/
+.project
+.classpath
+redundancy-stopper-repo/src/main/resources/rebel.xml
+redundancy-stopper-share/src/main/resources/rebel.xml
