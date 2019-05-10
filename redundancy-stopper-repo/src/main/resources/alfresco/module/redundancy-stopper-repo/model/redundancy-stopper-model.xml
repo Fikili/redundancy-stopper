@@ -52,7 +52,7 @@
                     <target>
                         <class>cm:content</class>
                         <mandatory enforced="false">false</mandatory>
-                        <many>false</many>
+                        <many>true</many>
                     </target>
                 </association>
  			</associations>
