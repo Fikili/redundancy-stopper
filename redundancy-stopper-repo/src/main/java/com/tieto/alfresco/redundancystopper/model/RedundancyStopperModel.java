@@ -9,6 +9,4 @@ public class RedundancyStopperModel {
 	public static final QName PROP_FINGERPRINT =  QName.createQName(TIETO_MODEL_1_0_URI,"fingerPrint");
 	public static final QName ASPECT_DUPLICATES =  QName.createQName(TIETO_MODEL_1_0_URI,"duplicates");
 	public static final QName ASSOC_DUPLICATES =  QName.createQName(TIETO_MODEL_1_0_URI,"duplicateAssocs");
-	
-	
 }

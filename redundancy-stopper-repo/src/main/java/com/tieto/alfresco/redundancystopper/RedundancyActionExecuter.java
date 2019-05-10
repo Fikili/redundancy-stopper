@@ -53,20 +53,13 @@ public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 					redundancyService.calculateFingerPrint(actionedUponNodeRef);
 					// Find files with same PROP_FINGERPRINT value
 					List <NodeRef> listOfSameFiles = findSameFiles(actionedUponNodeRef);
-					createAssociations(actionedUponNodeRef, listOfSameFiles);
-					addRedundantAspect();
-					
+					createAssociations(actionedUponNodeRef, listOfSameFiles);					
 				}
 				return null;
 			}
 
-			private void addRedundantAspect() {
-				// TODO Auto-generated method stub
-				
-			}
-
 			private void createAssociations(NodeRef sourceNodeRef, List<NodeRef> listOfSameFiles) {
-				LOGGER.debug("Let's create associations");
+				LOGGER.debug("Let's create {} associations", listOfSameFiles.size()-1);
 				for (NodeRef nodeRef : listOfSameFiles) {
 					if (! nodeRef.equals(sourceNodeRef)) {
 						nodeService.createAssociation(sourceNodeRef, nodeRef, RedundancyStopperModel.ASSOC_DUPLICATES);
@@ -78,9 +71,10 @@ public class RedundancyActionExecuter extends ActionExecuterAbstractBase {
 				List <NodeRef> listOfSameFiles = new ArrayList<>();
 				String fingerprint = (String) nodeService.getProperty(actionedUponNodeRef, RedundancyStopperModel.PROP_FINGERPRINT);
 				String cmisQuery = "select * from rstop:identificator where rstop:fingerPrint=\'" + fingerprint +"\'";
-				ResultSet rs = null;
+				LOGGER.debug("Used CMIS query : {}", cmisQuery);
 				
 				// Find all files with same value in PROP_FINGERPRINT
+				ResultSet rs = null;
 				try {
 					rs = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_CMIS_ALFRESCO, cmisQuery);
 					if (null != rs && rs.length() > 0) {
