@@ -10,4 +10,5 @@ Custom property is used for storing "size;MD5 hash". Then CMIS query is used to 
 # Configuration
 Create folder and apply redundancyActionExecuter action with "Run in background". Then just upload same files and see if they are marked with indicator.
 
-
+# Demo
+[![Alfresco Hackathon project](http://img.youtube.com/vi/lSNHPKSDi1w/0.jpg)](http://www.youtube.com/watch?v=lSNHPKSDi1w "Redundancy Stopper")
